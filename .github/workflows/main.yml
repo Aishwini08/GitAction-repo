@@ -1,30 +1,31 @@
-#This script is for GitAction Practical 
-#Date : 27/02/2026
+name: CI/CD on EC2 Runner 👑
 
-
-name: CI Test
-
-on: 
+on:
   push:
     branches:
       - Ci-Cd
 
-jobs: 
-  build:
-    runs-on: ubuntu-latest
+jobs:
+  build-and-run:
+
+    runs-on: self-hosted
 
     steps:
 
-      - name: Step 1 - Checkout code 
+      - name: Checkout code 📥
         uses: actions/checkout@v4
 
-      - name: Step 2 - Show Files
+      - name: Show files 📁
         run: ls -la
 
-      - name: Step 3 - Build Docker Image
+      - name: Build Docker image 🐳
         run: docker build -t my-node-app .
 
-      - name: Step 4 - Sucess message
-        run: echo "Build Successfull !!!"
+      - name: Stop old container (if running)
+        run: docker stop my-node-app || true
 
+      - name: Remove old container
+        run: docker rm my-node-app || true
 
+      - name: Run new container 🚀
+        run: docker run -d -p 3000:3000 --name my-node-app my-node-app
