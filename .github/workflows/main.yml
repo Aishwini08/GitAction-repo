@@ -1,0 +1,14 @@
+#This script is for GitAction Practical 
+#Date : 27/02/2026
+
+
+name: CI Test
+
+on: push
+
+jobs: 
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "Hello World !!!!"  
