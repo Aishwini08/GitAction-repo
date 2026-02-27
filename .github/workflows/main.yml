@@ -4,7 +4,10 @@
 
 name: CI Test
 
-on: push
+on: 
+  push:
+    branches:
+      - Ci-Cd
 
 jobs: 
   build:
@@ -12,12 +15,16 @@ jobs:
 
     steps:
 
-      - name: Step 1 - Download repo code
+      - name: Step 1 - Checkout code 
         uses: actions/checkout@v4
 
       - name: Step 2 - Show Files
         run: ls -la
 
-      - name: Step 3 - Print Success Message
-        run: echo "YOU HAVE PASSED THE TEST!!!!"
+      - name: Step 3 - Build Docker Image
+        run: docker build -t my-node-app .
+
+      - name: Step 4 - Sucess message
+        run: echo "Build Successfull !!!"
+
 
